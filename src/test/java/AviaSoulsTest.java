@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,9 +16,7 @@ public class AviaSoulsTest {
         aviaSouls.add(ticket2);
 
         Ticket[] result = aviaSouls.findAll();
-        assertEquals(2, result.length);
-        assertTrue(Arrays.asList(result).contains(ticket1));
-        assertTrue(Arrays.asList(result).contains(ticket2));
+        assertArrayEquals(new Ticket[]{ticket1, ticket2}, result);
     }
 
     @Test
@@ -34,9 +31,7 @@ public class AviaSoulsTest {
         aviaSouls.add(ticket3);
 
         Ticket[] result = aviaSouls.search("CityA", "CityB");
-        assertEquals(2, result.length);
-        assertTrue(Arrays.asList(result).contains(ticket1));
-        assertTrue(Arrays.asList(result).contains(ticket3));
+        assertArrayEquals(new Ticket[]{ticket1, ticket3}, result);
     }
 
     @Test
@@ -53,9 +48,7 @@ public class AviaSoulsTest {
         Comparator<Ticket> priceComparator = Comparator.comparingInt(Ticket::getPrice);
         Ticket[] result = aviaSouls.searchAndSortBy("CityA", "CityB", priceComparator);
 
-        assertEquals(2, result.length);
-        assertEquals(ticket1, result[0]);
-        assertEquals(ticket3, result[1]);
+        assertArrayEquals(new Ticket[]{ticket1, ticket3}, result);
     }
 
     @Test
@@ -72,11 +65,8 @@ public class AviaSoulsTest {
         Comparator<Ticket> timeComparator = Comparator.comparingInt(Ticket::getTimeFrom);
         Ticket[] result = aviaSouls.searchAndSortBy("CityA", "CityB", timeComparator);
 
-        assertEquals(2, result.length);
-        assertEquals(ticket1, result[0]);
-        assertEquals(ticket3, result[1]);
+        assertArrayEquals(new Ticket[]{ticket1, ticket3}, result);
     }
-
 
     @Test
     public void testSearchNoMatch() {
@@ -90,7 +80,6 @@ public class AviaSoulsTest {
         Ticket[] result = aviaSouls.search("CityX", "CityY");
         assertEquals(0, result.length);
     }
-
 
     @Test
     public void testTicketComparison() {
